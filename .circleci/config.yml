@@ -36,6 +36,20 @@ jobs:
             . venv/bin/activate
             pipenv sync --dev
 
+      - run:
+          name: apply migrations
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pithon manage.py migrate
+
+      - run:
+          name: apply migrations
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pithon manage.py collectstatic --noinput
+
       - save_cache:
           paths:
             - ./venv
@@ -49,7 +63,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            py.test --junitxml=test-reports/junit.xml
+            coverage run -m py.test
 
       - store_test_results:
           path: test-reports
@@ -57,4 +71,14 @@ jobs:
 
       - store_artifacts:
           path: test-reports
+          destination: test-reports
+
+      - run:
+          name: coverage report
+          command: |
+            . venv/bin/activate
+            coverage report
+
+      - store_artifacts:
+          path: ./.coverage
           destination: test-reports
