@@ -21,6 +21,10 @@ import rest_framework.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include((core.api.urls, 'root-core-api'), namespace='core-api')),
-    path('api-auth/', include(rest_framework.urls, namespace='rest_framework')),
+    path(
+        '', include((core.api.urls, 'root-core-api'), namespace='core-api')
+    ),
+    path(
+        'api-auth/', include(rest_framework.urls, namespace='rest_framework')
+    ),
 ]

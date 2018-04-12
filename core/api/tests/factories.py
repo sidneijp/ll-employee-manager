@@ -17,4 +17,3 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Employee
-
