@@ -8,6 +8,13 @@ Django = "*"
 djangorestframework = "*"
 
 [dev-packages]
+pytest = "*"
+pytest-django = "*"
+pytest-watch = "*"
+coverage = "*"
+factory-boy = "*"
+ipython = "*"
+ipdb = "*"
 
 [requires]
 python_version = "3.6"
