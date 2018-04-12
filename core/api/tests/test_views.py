@@ -33,6 +33,7 @@ def test_get_employee(client, employee):
     assert response.status_code == 200
     json_response = response.json()
     assert employee.email == json_response.get('email')
+    assert employee.department.name == json_response.get('department')
     expected_fields = ('name', 'email', 'department')
     fields = json_response.keys()
     for expected_field in expected_fields:
