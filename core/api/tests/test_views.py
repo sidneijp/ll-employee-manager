@@ -5,34 +5,34 @@ from . import factories
 
 
 @pytest.mark.django_db
-def test_create_employee(client, department):
+def test_create_employee(authenticated_client, department):
     employee = factories.EmployeeFactory.build(department=department)
     data = {
         'name': employee.name,
         'email': employee.email,
         'department': employee.department.pk,
     }
-    response = client.post('/employee/', data)
+    response = authenticated_client.post('/employee/', data)
     assert response.status_code == 201
     last_inserted_employee = Employee.objects.last()
     assert last_inserted_employee.email == employee.email
 
 
 @pytest.mark.django_db
-def test_list_employee(client, employees):
+def test_list_employee(authenticated_client, employees):
     expected_amount = Employee.objects.all().count()
-    response = client.get('/employee/')
+    response = authenticated_client.get('/employee/')
     assert response.status_code == 200
     amount = len(response.json())
     assert expected_amount == amount
 
 
 @pytest.mark.django_db
-def test_list_filter_employee(client, departments, employees):
+def test_list_filter_employee(authenticated_client, departments, employees):
     department = departments.pop()
     expected_amount = Employee.objects.filter(department=department).count()
     data = {'department': department.pk}
-    response = client.get('/employee/', data)
+    response = authenticated_client.get('/employee/', data)
     assert response.status_code == 200
     json_response = response.json()
     amount = len(json_response)
@@ -41,8 +41,8 @@ def test_list_filter_employee(client, departments, employees):
 
 
 @pytest.mark.django_db
-def test_get_employee(client, employee):
-    response = client.get('/employee/%s/' % employee.pk)
+def test_get_employee(authenticated_client, employee):
+    response = authenticated_client.get('/employee/%s/' % employee.pk)
     assert response.status_code == 200
     json_response = response.json()
     assert employee.email == json_response.get('email')
@@ -55,9 +55,9 @@ def test_get_employee(client, employee):
 
 
 @pytest.mark.django_db
-def test_delete_employee(client, employee):
-    response = client.delete('/employee/%s/' % employee.pk)
+def test_delete_employee(authenticated_client, employee):
+    response = authenticated_client.delete('/employee/%s/' % employee.pk)
     assert response.status_code == 204
     invalid_id = -1
-    response = client.delete('/employee/%s/' % invalid_id)
+    response = authenticated_client.delete('/employee/%s/' % invalid_id)
     assert response.status_code == 404
