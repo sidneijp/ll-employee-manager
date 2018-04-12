@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+from decouple import config, Csv
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,12 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fpwtxh5($@8-0ny7tw9tb%6bjx%2zzcgz#$2t16*0d+04wb)t('
+SECRET_KEY = config(
+    'SECRET_KEY', default='wnyyx5y0q)0m(zh221a3r4&&=xlz=xzt$s#_s+6i9k3x)#i1gd'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS', default='localhost, 127.0.0.1', cast=Csv()
+)
 
 
 # Application definition
@@ -78,10 +83,42 @@ WSGI_APPLICATION = 'employee_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+_DB_DEFAULTS = {
+    'django.db.backends.sqlite3': {
+        'HOST': '',
+        'PORT': '',
+        'NAME': 'db.sqlite3',
+        'USER': '',
+        'PASSWORD': '',
+    },
+    'django.db.backends.postgresql': {
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'NAME': 'db.sqlite3',
+        'USER': 'postgres',
+        'PASSWORD': '',
+    },
+    'django.db.backends.mysql': {
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'NAME': 'db.sqlite3',
+        'USER': 'root',
+        'PASSWORD': '',
+    },
+}
+
+_DB_ENGINE = 'django.db.backends.%s' % config('DB_ENGINE', default='sqlite3')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': _DB_ENGINE,
+        'HOST': config('DB_HOST', default=_DB_DEFAULTS[_DB_ENGINE]['HOST']),
+        'PORT': config('DB_PORT', default=_DB_DEFAULTS[_DB_ENGINE]['PORT']),
+        'NAME': config('DB_NAME', default=_DB_DEFAULTS[_DB_ENGINE]['NAME']),
+        'USER': config('DB_USER', default=_DB_DEFAULTS[_DB_ENGINE]['USER']),
+        'PASSWORD': config(
+            'DB_PASSWORD', default=_DB_DEFAULTS[_DB_ENGINE]['PASSWORD']
+        ),
     }
 }
 
@@ -108,9 +145,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = config('LANGUAGE_CODE', default='en-us')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 

@@ -1,9 +1,9 @@
 *.sqlite3
 *.sqlite
-
 *.pyc
 __pycache__/
 .pytest_cache/
 .coverage
 /static/
 /venv/
+settings.ini
