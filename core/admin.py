@@ -4,11 +4,14 @@ from core.models import Department, Employee
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ('name',)
 
 
 class EmployeeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('email', 'name', 'department',)
+    search_fields = ('email', 'name',)
+    list_filter = ('department',)
+
 
 admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Employee, EmployeeAdmin)
