@@ -61,3 +61,9 @@ def test_delete_employee(authenticated_client, employee):
     invalid_id = -1
     response = authenticated_client.delete('/employee/%s/' % invalid_id)
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_unauthorized_api_call(client, employees):
+    response = client.get('/employee/')
+    assert response.status_code == 403
