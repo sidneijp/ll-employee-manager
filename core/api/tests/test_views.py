@@ -25,3 +25,16 @@ def test_list_employee(client, employees):
     assert response.status_code == 200
     amount = len(response.json())
     assert expected_amount == amount
+
+
+@pytest.mark.django_db
+def test_get_employee(client, employee):
+    response = client.get('/employee/%s/' % employee.pk)
+    assert response.status_code == 200
+    json_response = response.json()
+    assert employee.email == json_response.get('email')
+    expected_fields = ('name', 'email', 'department')
+    fields = json_response.keys()
+    for expected_field in expected_fields:
+        assert expected_field in fields
+    assert len(expected_fields) == len(fields)
