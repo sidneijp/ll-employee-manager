@@ -28,7 +28,8 @@ def test_list_employee(client, employees):
 
 
 @pytest.mark.django_db
-def test_list_filter_employee(client, department, employees):
+def test_list_filter_employee(client, departments, employees):
+    department = departments.pop()
     expected_amount = Employee.objects.filter(department=department).count()
     data = {'department': department.pk}
     response = client.get('/employee/', data)
