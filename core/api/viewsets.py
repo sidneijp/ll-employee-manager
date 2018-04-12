@@ -8,6 +8,7 @@ from core.models import Employee
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    filter_fields = ('department',)
 
     @use_serializer(EmployeeReadSerializer)
     def list(self, request):
