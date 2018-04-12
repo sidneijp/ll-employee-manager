@@ -41,14 +41,14 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pithon manage.py migrate
+            python manage.py migrate
 
       - run:
           name: apply migrations
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pithon manage.py collectstatic --noinput
+            python manage.py collectstatic --noinput
 
       - save_cache:
           paths:
