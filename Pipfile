@@ -15,6 +15,7 @@ coverage = "*"
 factory-boy = "*"
 ipython = "*"
 ipdb = "*"
+"flake8" = "*"
 
 [requires]
 python_version = "3.6"
