@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Department(models.Model):
-    name = models.CharField(_('Name'), max_length=160)
+    name = models.CharField(_('Name'), max_length=160, unique=True)
 
     class Meta:
         verbose_name = _('Department')
