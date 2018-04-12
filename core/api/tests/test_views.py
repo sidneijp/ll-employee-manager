@@ -28,6 +28,18 @@ def test_list_employee(client, employees):
 
 
 @pytest.mark.django_db
+def test_list_filter_employee(client, department, employees):
+    expected_amount = Employee.objects.filter(department=department).count()
+    data = {'department': department.pk}
+    response = client.get('/employee/', data)
+    assert response.status_code == 200
+    json_response = response.json()
+    amount = len(json_response)
+    assert expected_amount == amount
+    assert department.name in [_.get('department') for _ in json_response]
+
+
+@pytest.mark.django_db
 def test_get_employee(client, employee):
     response = client.get('/employee/%s/' % employee.pk)
     assert response.status_code == 200
