@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 
 from core.api.serializers import EmployeeReadSerializer, EmployeeSerializer
+from core.api.filters import EmployeeFilter
 from core.api.utils import use_serializer
 from core.models import Employee
 
@@ -8,7 +9,7 @@ from core.models import Employee
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    filter_fields = ('department',)
+    filter_class = EmployeeFilter
 
     @use_serializer(EmployeeReadSerializer)
     def list(self, request):

@@ -31,7 +31,7 @@ def test_list_employee(authenticated_client, employees):
 def test_list_filter_employee(authenticated_client, departments, employees):
     department = departments.pop()
     expected_amount = Employee.objects.filter(department=department).count()
-    data = {'department': department.pk}
+    data = {'department': department.name}
     response = authenticated_client.get('/employee/', data)
     assert response.status_code == 200
     json_response = response.json()
