@@ -38,3 +38,12 @@ def test_get_employee(client, employee):
     for expected_field in expected_fields:
         assert expected_field in fields
     assert len(expected_fields) == len(fields)
+
+
+@pytest.mark.django_db
+def test_delete_employee(client, employee):
+    response = client.delete('/employee/%s/' % employee.pk)
+    assert response.status_code == 204
+    invalid_id = -1
+    response = client.delete('/employee/%s/' % invalid_id)
+    assert response.status_code == 404
