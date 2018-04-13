@@ -1,5 +1,6 @@
-activate:
-	pipenv shell --three
+SHELL:=/bin/bash
+PORT:=8000
+MANAGE:=`pipenv --venv`/bin/python manage.py
 
 requirements:
 	pipenv install
@@ -7,17 +8,17 @@ requirements:
 dev-requirements:
 	pipenv install --dev
 
-runserver:
-	python manage.py runserver
+run:
+	$(MANAGE) runserver 0.0.0.0:$(PORT)
 
 migrate:
-	python manage.py migrate
+	$(MANAGE) migrate
 
 collectstatic:
-	python manage.py collectstatic --noinput
+	$(MANAGE) collectstatic --noinput
 
 shell:
-	python manage.py shell
+	$(MANAGE) shell
 
 test:
 	py.test
@@ -39,3 +40,14 @@ clean:
 	@rm -f .coverage
 	@rm -rf htmlcov/
 	@echo "Cleaned coverage report files"
+
+pull:
+	git pull origin
+
+install: requirements migrate
+
+dev-install: dev-requirements migrate
+
+update:	pull install
+
+dev-update:	pull dev-install
