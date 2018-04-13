@@ -7,6 +7,4 @@ from core.api.viewsets import EmployeeViewSet
 router = routers.DefaultRouter()
 router.register(r'employee', EmployeeViewSet)
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls
