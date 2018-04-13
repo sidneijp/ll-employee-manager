@@ -51,6 +51,6 @@ install: requirements migrate load-initial-data
 
 dev-install: dev-requirements migrate load-initial-data
 
-update:	pull install load-initial-data
+update:	pull install
 
-dev-update:	pull dev-install load-initial-data
+dev-update:	pull dev-install
