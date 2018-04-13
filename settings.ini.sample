@@ -1,0 +1,34 @@
+[settings]
+# Django's SECRET_KEY
+#SECRET_KEY=
+
+# Debug mode. Defaults to False
+DEBUG=True
+
+# Django's ALLOWED_HOSTS. Use ',' to separate multiple values
+ALLOWED_HOSTS=localhost, 127.0.0.1
+
+
+# Database engine. Choose one: sqlite3 mysql postgresql
+DB_ENGINE=sqlite3
+
+# Database host
+DB_HOST=localhost
+
+# Database name
+DB_NAME=db.sqlite3
+
+# Database service running port on DB_HOST. Don't apply to sqlite3
+#DB_PORT=
+
+# Database user on DB_HOST used by the application. Don't apply to sqlite3
+#DB_USER=
+
+# DB_USER's password. Don't apply to sqlite3
+#DB_PASSWORD=
+
+
+# Default application's language
+LANGUAGE_CODE=en-us
+# Application TIME_ZONE
+TIME_ZONE=UTC
