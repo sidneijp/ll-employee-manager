@@ -1,6 +1,6 @@
 # employee-manager
 ___
-[![CircleCI](https://circleci.com/bb/sidnei/employee-manager/tree/develop.svg?style=svg)](https://circleci.com/bb/sidnei/employee-manager/tree/develop)
+[![CircleCI](https://circleci.com/bb/sidnei/employee-manager/tree/develop.svg?style=svg&circle-token=a05a6fd2a24f3465225aba2e23a648f9a7ee1ea8)](https://circleci.com/bb/sidnei/employee-manager/tree/develop)
 
 A Django Admin panel to manage employees' data and an API to list, add and remove employees.
 
