@@ -1,16 +1,13 @@
 from rest_framework import serializers
 
-from core.models import Employee
+from core.models import Department, Employee
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employee
-        fields = ('name', 'email', 'department')
-
-
-class EmployeeReadSerializer(serializers.ModelSerializer):
-    department = serializers.StringRelatedField()
+class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
+    department = serializers.SlugRelatedField(
+        slug_field='name',
+        queryset=Department.objects.all(),
+    )
 
     class Meta:
         model = Employee

@@ -10,7 +10,7 @@ def test_create_employee(authenticated_client, department):
     data = {
         'name': employee.name,
         'email': employee.email,
-        'department': employee.department.pk,
+        'department': employee.department.name,
     }
     response = authenticated_client.post('/employee/', data)
     assert response.status_code == 201
@@ -42,7 +42,7 @@ def test_list_filter_employee(authenticated_client, departments, employees):
 
 @pytest.mark.django_db
 def test_get_employee(authenticated_client, employee):
-    response = authenticated_client.get('/employee/%s/' % employee.pk)
+    response = authenticated_client.get('/employee/%s/' % employee.email)
     assert response.status_code == 200
     json_response = response.json()
     assert employee.email == json_response.get('email')
@@ -56,7 +56,7 @@ def test_get_employee(authenticated_client, employee):
 
 @pytest.mark.django_db
 def test_delete_employee(authenticated_client, employee):
-    response = authenticated_client.delete('/employee/%s/' % employee.pk)
+    response = authenticated_client.delete('/employee/%s/' % employee.email)
     assert response.status_code == 204
     invalid_id = -1
     response = authenticated_client.delete('/employee/%s/' % invalid_id)
