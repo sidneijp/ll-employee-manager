@@ -49,8 +49,10 @@ pull:
 	git pull origin
 
 install: requirements migrate load-initial-data
+	cp settings.ini.sample settings.ini
 
 dev-install: dev-requirements migrate load-initial-data
+	cp settings.ini.sample settings.ini
 
 update:	pull install
 
