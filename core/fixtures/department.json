@@ -1,0 +1,1 @@
+[{"model": "core.department", "pk": 1, "fields": {"name": "IT"}}, {"model": "core.department", "pk": 2, "fields": {"name": "RH"}}, {"model": "core.department", "pk": 3, "fields": {"name": "Sales"}}]

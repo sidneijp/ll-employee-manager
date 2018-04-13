@@ -10,6 +10,7 @@ dev-requirements:
 
 load-initial-data:
 	$(MANAGE) loaddata employee_manager/fixtures/auth.json
+	$(MANAGE) loaddata core/fixtures/department.json
 
 run:
 	$(MANAGE) runserver 0.0.0.0:$(PORT)
