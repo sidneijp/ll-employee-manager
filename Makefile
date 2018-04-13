@@ -8,6 +8,9 @@ requirements:
 dev-requirements:
 	pipenv install --dev
 
+load-initial-data:
+	$(MANAGE) loaddata employee_manager/fixtures/auth.json
+
 run:
 	$(MANAGE) runserver 0.0.0.0:$(PORT)
 
@@ -44,10 +47,10 @@ clean:
 pull:
 	git pull origin
 
-install: requirements migrate
+install: requirements migrate load-initial-data
 
-dev-install: dev-requirements migrate
+dev-install: dev-requirements migrate load-initial-data
 
-update:	pull install
+update:	pull install load-initial-data
 
-dev-update:	pull dev-install
+dev-update:	pull dev-install load-initial-data
