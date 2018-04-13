@@ -18,70 +18,100 @@ The project uses `pipenv` instead of `pip` to manage python - so there is no `re
 
 Now to install python packages dependencies:
 
-```$ pipenv install```
+```$ make install```
 
-Apply database migrations:
+To the application and the API will be available at http://localhost:8000 and the admin interface at http://localhost:8000/admin.
 
-```$ python manage.py migrate```
+```$ make run```
 
-Create an user (just follow the instructions) :
+A initial superuser is created:
 
-```$ python manage.py createsuperuser```
+```
+username:admin
 
-Finally run the application and the API will be available at http://localhost:8000 and the admin interface at http://localhost:8000/admin
+password:employee123
 
-```$ python manage.py runserver 0.0.0.0:8000```
+```
 
 ### Development
 
 Install the `dev-packages` to be able to run tests, generate coverage report, run linter, etc. 
 
-```$ pipenv install --dev```
+```$ make dev-install```
 
 To run automated tests:
 
-```$ py.test```
+```$ make test```
 
 or run in "watcher mode":
 
-```$ ptw```
+```$ make testd```
 
 to generate tests coverage:
 
-```coverage run -m py.test```
+```$ make coverage```
 
 then to see the report result:
 
-```coverage report```
+```make report```
 
 or for "HTML fashion" report:
 
-```coverage html```
+```make html```
 
-The HTML report will be available at `./htmlcov/index.html` - open it with a web browser.
+*The HTML report will be available at `./htmlcov/index.html` - open it with a web browser.
 
 ## API example (list)
 
-Request
-```curl -u username:password -H "Content-Type: application/javascript" http://localhost:8000/employee/```
+URL schema:
 
-## Response
+```http://localhost:8000/employee/[employee_email/][?department=department_name]```
+
+with curl
+```curl -u username:password -H "Content-Type: application/json" http://localhost:8000/employee/[employee_email/][?department=department_name]```
+
+
+### Examples
+
+To create some employees:
+
+```curl -u admin:employee123 -X POST -d '{"name": "Jack", "email": "jack@test.com", "department":"IT"}' -H "Content-Type: application/json" http://localhost:8000/employee/'```
+
+```curl -u admin:employee123 -X POST -d '{"name": "John", "email": "john@test.com", "department":"IT"}' -H "Content-Type: application/json" http://localhost:8000/employee/'```
+
+To edit a employee:
+
+```curl -u admin:employee123 -X PUT -d '{"name": "Jackson", "email": "jackson@test.org", "department":"RH"}' -H "Content-Type: application/json" http://localhost:8000/employee/jack@test.com/```
+
+To get a employee:
+
+```curl -u admin:employee123 -X GET -H "Content-Type: application/json" http://localhost:8000/employee/jackson@test.org/```
+
+To list all employees:
+
+```curl -u admin:employee123 -X GET -H "Content-Type: application/json" http://localhost:8000/employee/```
+
+*Response sample: 
+
 ```
 [
     {
-        "name": "Sid",
-        "email": "sid@internet.com",
-        "department": "Sales"
-    },
-    {
-        "name": "Sidnei",
-        "email": "sidnei@internet.com",
-        "department": "IT"
-    },
-    {
-        "name": "Ney",
-        "email": "ney@internet.com",
+        "name": "Jackson",
+        "email": "jackson@test.org",
         "department": "RH"
+    },
+    {
+        "name": "John",
+        "email": "john@test.com",
+        "department": "IT"
     }
 ]
 ```
+
+To list all employees by department:
+
+```curl -u admin:employee123 -X GET -H "Content-Type: application/json" http://localhost:8000/employee/?department=IT```
+
+To delete a employee:
+
+```curl -u admin:employee123 -X DELETE -H "Content-Type: application/json" http://localhost:8000/employee/jackson@test.org/```
